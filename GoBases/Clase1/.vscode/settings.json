@@ -1,0 +1,4 @@
+{
+    "go.diagnostic.vulncheck": "Imports",
+    "go.lintOnSave": "off"
+}
