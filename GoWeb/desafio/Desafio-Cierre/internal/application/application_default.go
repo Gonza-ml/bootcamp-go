@@ -60,7 +60,7 @@ func (a *ApplicationDefault) SetUp() (err error) {
 	if err != nil {
 		return
 	}
-	rp := repository.NewRepositoryTicketMap(db)
+	rp := repository.NewRepositoryTicketMap(db, len(db))
 	// service ...
 	sv := service.NewServiceTicketDefault(rp)
 	// handler ...
@@ -73,8 +73,8 @@ func (a *ApplicationDefault) SetUp() (err error) {
 		w.Write([]byte("OK"))
 	})
 	(*a).rt.Route("/tickets", func(r chi.Router) {
-		r.Get("/ticket/getByCountry/{dest}", hd.GetTicketsByDestinationCountry)
-		r.Get("/ticket/getAverage/:{dest}", hd.GetTicketsByDestinationCountry)
+		r.Get("/ticket/getByCountry/{dest}", hd.GetTicketsByDestinationCountry())
+		r.Get("/ticket/getAverage/:{dest}", hd.GetPercentageTicketsByDestinationCountry())
 	})
 
 	return

@@ -1,11 +1,18 @@
 package repository
 
-import "context"
+import (
+	"app/internal"
+	"context"
+)
 
 // NewRepositoryTicketMap creates a new repository for tickets in a map
-func NewRepositoryTicketMap(dbFile string, lastId int) *RepositoryTicketMap {
+func NewRepositoryTicketMap(db map[int]internal.TicketAttributes, lastId int) *RepositoryTicketMap {
+	defaultDb := make(map[int]internal.TicketAttributes)
+	if db != nil {
+		defaultDb = db
+	}
 	return &RepositoryTicketMap{
-		dbFile: dbFile,
+		db:     defaultDb,
 		lastId: lastId,
 	}
 }
@@ -44,4 +51,3 @@ func (r *RepositoryTicketMap) GetTicketsByDestinationCountry(ctx context.Context
 
 	return
 }
-
